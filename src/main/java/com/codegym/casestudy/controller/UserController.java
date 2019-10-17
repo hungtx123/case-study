@@ -5,6 +5,9 @@ import com.codegym.casestudy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.logging.LoggingSystem;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,12 +20,27 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/index")
-    public ModelAndView listUser(){
-        ModelAndView modelAndView = new ModelAndView("index", "users", userService.findAll());
 
+    @GetMapping("")
+    public ModelAndView listUser(@RequestParam("s") Optional<String> s, @PageableDefault(size = 1) Pageable pageable){
+        Page<User> users;
+        if (s.isPresent()){
+            users = userService.findAllByFirstNameContaining(s.get(), pageable);
+        }else {
+            users = userService.findAll(pageable);
+        }
+
+        ModelAndView modelAndView = new ModelAndView("index");
+        modelAndView.addObject("users", users);
         return modelAndView;
     }
+
+//    @GetMapping("/index")
+//    public ModelAndView listUser(){
+//        ModelAndView modelAndView = new ModelAndView("index", "users", userService.findAll());
+//
+//        return modelAndView;
+//    }
 
     @GetMapping("/create")
     public ModelAndView showCreateForm(){

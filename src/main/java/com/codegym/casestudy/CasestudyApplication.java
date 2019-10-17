@@ -35,9 +35,12 @@ public class CasestudyApplication {
 
     @Configuration
     class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
+            private  ApplicationContext appconfig;
 
         @Override
         public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+            appconfig=applicationContext;
+
         }
 
 

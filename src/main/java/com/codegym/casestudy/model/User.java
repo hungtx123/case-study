@@ -21,15 +21,13 @@ public class User implements Validator {
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String phoneNumber, Long age, String email, String password, String repassword) {
+    public User(Long id, String firstName, String lastName, String phoneNumber, Long age, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.age = age;
         this.email = email;
-        this.password = password;
-        this.repassword = repassword;
     }
 
     @NotEmpty
@@ -51,12 +49,6 @@ public class User implements Validator {
     @Pattern(regexp = "(^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$)", message = "{Pattern.customer.email}")
     private String email;
 
-    @NotEmpty
-    @Size(min = 6, max = 12)
-    private String password;
-
-    @NotEmpty
-    private String repassword;
     @Override
     public String toString() {
         return String.format("Customer[id=%d, firstName='%s', lastName='%s', age='%d' ,email='%s']", id, firstName, lastName ,age,email);
@@ -111,21 +103,7 @@ public class User implements Validator {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRepassword() {
-        return repassword;
-    }
-
-    public void setRepassword(String repassword) {
-        this.repassword = repassword;
-    }
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -139,11 +117,7 @@ public class User implements Validator {
         if (!phoneNumber.startsWith("0")) {
             errors.rejectValue("phoneNumber", "phoneNumber.startsWith");
         }
-        String password = user.getPassword();
-        String repassword = user.getRepassword();
-        if (!password.equals(repassword)) {
-            errors.rejectValue("repassword", "repassword.error");
-        }
+
     }
 }
 

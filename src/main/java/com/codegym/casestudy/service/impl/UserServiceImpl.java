@@ -4,13 +4,21 @@ import com.codegym.casestudy.model.User;
 import com.codegym.casestudy.repository.UserRepository;
 import com.codegym.casestudy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
         @Autowired
         UserRepository userRepository;
-        @Override
+
+    @Override
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    @Override
         public Iterable<User> findAll() {
             return userRepository.findAll();
         }
@@ -29,4 +37,9 @@ public class UserServiceImpl implements UserService {
         public void remove(Long id) {
             userRepository.deleteById(id);
         }
+
+    @Override
+    public Page<User> findAllByFirstNameContaining(String name, Pageable pageable) {
+        return null;
     }
+}

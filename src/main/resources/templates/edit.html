@@ -36,16 +36,6 @@
                 <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></td>
             </tr>
             <tr>
-                <td>Password: </td>
-                <td><input type="password" th:field="*{password}"/></td>
-                <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
-            </tr>
-            <tr>
-                <td>Repassword: </td>
-                <td><input type="password" th:field="*{repassword}"/></td>
-                <td th:if="${#fields.hasErrors('repassword')}" th:errors="*{repassword}"></td>
-            </tr>
-            <tr>
                 <td></td>
                 <td><input type="submit" value="Update"/></td>
             </tr>
